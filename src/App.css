@@ -1,1 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;  
+    outline: none;
+    font-family: 'Orbitron', sans-serif;
+}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	font-weight: 400;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+
+.title {
+    border: 1px solid yellow;
+}
+
+.AppContainer {
+    background-color: black;
+    height: 100vh;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.pomodoroContainer {
+    text-align: center;
+    border: 1px solid red;
+    height: 300px;
+    width: 400px;
+    align-items: center;
+}
+
+.breakAndSession {
+    justify-content: center;
+    margin: 30px 0;
+    display: flex;
+    align-self: center;
+}
+
+#break-label {
+    margin-right: 50px;
+}
+
+.upDownContainer {
+    display: flex;
+    margin-top: 10px;
+}
+
+.session {
+    border: 1px solid white;
+    width: 100px;
+    height: 50px;
+    align-items: center;
+    margin: 0 auto;
+}
