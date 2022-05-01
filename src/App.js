@@ -1,5 +1,8 @@
 import './App.css';
 import React, { useEffect, useState, useRef } from 'react';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import ReplayIcon from '@mui/icons-material/Replay';
+import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 
 function App() {
   const [breakLength, setBreakLength] = useState(5);
@@ -26,32 +29,32 @@ function App() {
     let interval = null;
     if (play && !breakSession) {
       interval = setInterval(() => {
-        if (clockTime >= 0) {
+        if (clockTime > 0) {
           setClockTime((time) => time - 1)
-          if (playAudio === true && clockTime === 0) {
+          if (playAudio === true && clockTime === 1) {
             myRef.current.play();
           }
         } else {
           setbreakSession(true)
           setPlay(false);
-          clearInterval(interval)
           setClockTime(breakLength * 60)
+          clearInterval(interval)
         }
       }, 1000)
     }
     if (breakSession && !play) {
       console.log(clockTime)
       interval = setInterval(() => {
-        if (clockTime >= 0) {
+        if (clockTime > 0) {
           setClockTime((time) => time - 1)
-          if (playAudio === true && clockTime === 0) {
+          if (playAudio === true && clockTime === 1) {
             myRef.current.play();
           }
         } else {
           setbreakSession(false)
           setPlay(true);
-          clearInterval(interval)
           setClockTime(sessionTime * 60)
+          clearInterval(interval)
         }
       }, 1000)
     }
@@ -100,23 +103,32 @@ function App() {
   return (
     <div className="AppContainer">
       <div className='pomodoroContainer'>
+        <div className='pomodoro'>
         <h3 className='title'>25 + 5 Clock</h3>
 
       <div className='breakAndSession'>
         <div id="break-label">
           <p>Break Length</p>
           <div className='upDownContainer'>
-            <button id="break-decrement" onClick={handleDecrement}>↓</button>
+            <button id="break-decrement" onClick={handleDecrement}>
+            ↓
+            </button>
               <p id="break-length">{breakLength}</p>
-            <button id="break-increment" onClick={handleIncrement}>↑</button>
+            <button id="break-increment" onClick={handleIncrement}>
+              ↑
+            </button>
           </div>
         </div>
         <div id="session-label">
           <p>Session Length</p>
           <div className='upDownContainer'>
-            <button id="session-decrement" onClick={handleDecrement}>↓</button>
+            <button id="session-decrement" onClick={handleDecrement}>
+              ↓
+            </button>
               <p id="session-length">{sessionTime}</p>
-            <button id="session-increment" onClick={handleIncrement}>↑</button>
+            <button id="session-increment" onClick={handleIncrement}>
+              ↑
+            </button>
           </div>
         </div>
       </div>
@@ -129,23 +141,30 @@ function App() {
         <div>
           <p id="time-left">{convertMtoMS(clockTime)}</p>
         </div>
-
       </div>
-        <button id="start_stop" onClick={handlePlay}>≧</button>
-        <button id="reset" onClick={handleReset}>↺</button>
-      <div>
         
+        <button id="start_stop" onClick={handlePlay }>
+          <PlayCircleOutlineIcon />
+        </button>
+        <button id="reset" onClick={handleReset}>
+          <ReplayIcon />
+        </button>
+        <div className="alarm">
+          {
+            clockTime === 0 ?  
+              <AlarmOnIcon sx={{ color: "black" }}/>
+            : 
+            null
+          }
+        </div>
       </div>
-
-      </div>
-
       <audio
           id="beep"
           preload="auto"
           ref={myRef}
           src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
         />
-        
+        </div>
     </div>
   );
 }
