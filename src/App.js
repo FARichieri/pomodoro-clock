@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 function App() {
   const [breakLength, setBreakLength] = useState(5);
@@ -7,6 +7,8 @@ function App() {
   const [clockTime, setClockTime] = useState(1500);
   const [play, setPlay] = useState(false);
   const [breakSession, setbreakSession] = useState(false);
+  const [playAudio, setPlayAudio] = useState(true)
+  const myRef = useRef(null);
 
   const convertMtoMS = (value) => {
     let minutes = Math.floor(value / 60);
@@ -26,7 +28,9 @@ function App() {
       interval = setInterval(() => {
         if (clockTime >= 0) {
           setClockTime((time) => time - 1)
-          // setDisplayClock(convertMtoMS(clockTime))
+          if (playAudio === true && clockTime === 0) {
+            myRef.current.play();
+          }
         } else {
           setbreakSession(true)
           setPlay(false);
@@ -40,7 +44,9 @@ function App() {
       interval = setInterval(() => {
         if (clockTime >= 0) {
           setClockTime((time) => time - 1)
-          // setDisplayClock(convertMtoMS(clockTime))
+          if (playAudio === true && clockTime === 0) {
+            myRef.current.play();
+          }
         } else {
           setbreakSession(false)
           setPlay(true);
@@ -50,7 +56,7 @@ function App() {
       }, 1000)
     }
     return () => clearInterval(interval)
-  }, [play, sessionTime, displayClock, clockTime, breakSession, breakLength])
+  }, [play, sessionTime, displayClock, clockTime, breakSession, breakLength, playAudio, myRef])
 
   function handleReset() {
     setBreakLength(5)
@@ -59,6 +65,9 @@ function App() {
     setDisplayClock(convertMtoMS(1500))
     setbreakSession(false)
     setPlay(false);
+    setPlayAudio(false)
+    myRef.current.pause();
+    myRef.current.currentTime = 0;
   }
 
   function handleIncrement(e) {
@@ -85,6 +94,7 @@ function App() {
 
   function handlePlay() {
     setPlay(!play)
+    setPlayAudio(true)
   }
 
   return (
@@ -111,10 +121,15 @@ function App() {
         </div>
       </div>
 
-      <div className='session' id="timer-label">
-        <p>Session</p>
-        <p>{breakSession ? 'break' : ''}</p>
-        <p id="time-left">{convertMtoMS(clockTime)}</p>
+      <div className='session'>
+        <div id="timer-label">
+          <p>{breakSession ? 'Break' : 'Session'}</p>
+        </div>
+
+        <div>
+          <p id="time-left">{convertMtoMS(clockTime)}</p>
+        </div>
+
       </div>
         <button id="start_stop" onClick={handlePlay}>≧</button>
         <button id="reset" onClick={handleReset}>↺</button>
@@ -123,6 +138,14 @@ function App() {
       </div>
 
       </div>
+
+      <audio
+          id="beep"
+          preload="auto"
+          ref={myRef}
+          src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+        />
+        
     </div>
   );
 }
