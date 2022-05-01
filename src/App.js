@@ -1,8 +1,5 @@
 import './App.css';
 import React, { useEffect, useState, useRef } from 'react';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import ReplayIcon from '@mui/icons-material/Replay';
-import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 
 function App() {
   const [breakLength, setBreakLength] = useState(5);
@@ -12,7 +9,6 @@ function App() {
   const [breakSession, setbreakSession] = useState(false);
   const [playAudio, setPlayAudio] = useState(true)
   const myRef = useRef(null);
-  // const [displayAlarm, setDisplayAlarm] = (false)
 
   const convertMtoMS = (value) => {
     let minutes = Math.floor(value / 60);
@@ -34,7 +30,6 @@ function App() {
           setClockTime((time) => time - 1)
           if (playAudio === true && clockTime === 1) {
             myRef.current.play();
-            // displayAlarmIcon();
           }
         } else {
           setbreakSession(true)
@@ -51,7 +46,6 @@ function App() {
           setClockTime((time) => time - 1)
           if (playAudio === true && clockTime === 1) {
             myRef.current.play();
-            // displayAlarmIcon();
           }
         } else {
           setbreakSession(false)
@@ -103,14 +97,6 @@ function App() {
     setPlayAudio(true)
   }
 
-  // function displayAlarmIcon() {
-  //   setDisplayAlarm(true);
-  //   setTimeout(() => {
-      
-  //   }, "3000")
-  //   setDisplayAlarm(false);
-  // }
-
   return (
     <div className="AppContainer">
       <div className='pomodoroContainer'>
@@ -149,14 +135,6 @@ function App() {
         <button id="start_stop" onClick={handlePlay} />
         <button id="reset" onClick={handleReset} />
       </div>
-        <div className="alarm">
-          {/* {
-            displayAlarm ?  
-              <AlarmOnIcon fontSize="large" sx={{ color: "black" }}/>
-            : 
-            null
-          } */}
-        </div>
       </div>
         <p className='by'><a href="https://github.com/FARichieri" target="_blank" rel="noreferrer">By frichieri</a></p>
       <audio
