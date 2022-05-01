@@ -1,4 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@font-face {
+    font-family: 'Digital';
+    src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix')
+        format('embedded-opentype'),
+      url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2')
+        format('woff2'),
+      url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff')
+        format('woff'),
+      url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf')
+        format('truetype'),
+      url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7')
+        format('svg');
+  }
 
 * {
     user-select: none;
@@ -54,7 +67,7 @@ body {
 
 .pomodoroContainer {
     text-align: center;
-    background-color: rgba(181, 46, 46, 0.831);
+    background-color: rgba(242, 242, 242, 0.166);
     border-radius: 100%;
     height: 500px;
     width: 500px;
@@ -89,9 +102,13 @@ body {
 }
 #break-length {
     width: 50px;
+    font-size: 1.5rem;
+    font-family: digital;
 }
 #session-length {
     width: 50px;
+    font-size: 1.5rem;
+    font-family: digital;
 }
 
 .upDownContainer {
@@ -106,10 +123,26 @@ body {
     border: 1px solid rgb(54, 54, 54);
     padding: 5px;
     border-radius: 10px;
-    width: 100px;
+    width: 150px;
     align-items: center;
     margin: auto;
     justify-content: center;
+}
+.breakSession {
+    background-color: black;
+    color: rgba(255, 0, 0, 0.658);
+    border: 1px solid rgb(54, 54, 54);
+    padding: 5px;
+    border-radius: 10px;
+    width: 150px;
+    align-items: center;
+    margin: auto;
+    justify-content: center;
+}
+
+#time-left {
+    font-size: 2rem;
+    font-family: digital;
 }
 
 button {
@@ -120,19 +153,118 @@ button {
     font-size: 1.2rem;
 }
 
+#session-decrement, #break-decrement {
+    background-image: url("https://img.icons8.com/glyph-neue/64/000000/circled-down.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    transition: .3s;
+    border-radius: 100%;
+}
+#session-decrement:hover, #break-decrement:hover {
+    background-color: white;
+}
+#session-increment, #break-increment {
+    background-image: url("https://img.icons8.com/ios-glyphs/90/000000/circled-up.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    transition: .3s;
+    border-radius: 100%;
+}
+#session-increment:hover, #break-increment:hover {
+    background-color: white;
+}
+#reset {
+    background-image: url("https://img.icons8.com/glyph-neue/64/000000/restart.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    transition: .3s;
+    border-radius: 100%;
+}
+#reset:hover {
+    background-color: white;
+}
+#start_stop {
+    background-image: url("https://img.icons8.com/glyph-neue/64/000000/play-button-circled.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    transition: .3s;
+    border-radius: 100%;
+    margin-right: 5px;
+}
+#start_stop:hover {
+    background-color: white
+}
+
+button:active {
+    box-shadow: 0 0 10px 7px rgba(77, 77, 77, 0.658);;
+}
 
 .alarm {
     position: absolute;
-    top: 50%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.playAndStop {
+    margin-top: 6px;
+}
+
+.by {
+	position:relative;
+	font-size: .7rem;
+    text-align: center;
+	cursor: pointer;
+	text-decoration: none;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .by a {
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.607);
+	transition: .3s;
+  }
+  
+  .by a:hover {
+	color: white;
+  }
 
 @media only screen and (max-width: 768px) {
     .pomodoroContainer {
         height: 350px;
         width: 350px;
     }
+    #time-left {
+        font-size: 1.5rem;
+    }
+    #title {
+        font-size: 1.8rem;
+    }
+    #break-label, #session-label {
+        width: 170px;
+    }
+    #break-label p, #session-label p {
+        font-size: .9rem
+    }
+
 }
 
 @media only screen and (max-width: 350px) {
@@ -140,4 +272,5 @@ button {
         height: 280px;
         width: 280px;
     }
+
 }

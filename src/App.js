@@ -12,6 +12,7 @@ function App() {
   const [breakSession, setbreakSession] = useState(false);
   const [playAudio, setPlayAudio] = useState(true)
   const myRef = useRef(null);
+  // const [displayAlarm, setDisplayAlarm] = (false)
 
   const convertMtoMS = (value) => {
     let minutes = Math.floor(value / 60);
@@ -33,6 +34,7 @@ function App() {
           setClockTime((time) => time - 1)
           if (playAudio === true && clockTime === 1) {
             myRef.current.play();
+            // displayAlarmIcon();
           }
         } else {
           setbreakSession(true)
@@ -49,6 +51,7 @@ function App() {
           setClockTime((time) => time - 1)
           if (playAudio === true && clockTime === 1) {
             myRef.current.play();
+            // displayAlarmIcon();
           }
         } else {
           setbreakSession(false)
@@ -100,6 +103,14 @@ function App() {
     setPlayAudio(true)
   }
 
+  // function displayAlarmIcon() {
+  //   setDisplayAlarm(true);
+  //   setTimeout(() => {
+      
+  //   }, "3000")
+  //   setDisplayAlarm(false);
+  // }
+
   return (
     <div className="AppContainer">
       <div className='pomodoroContainer'>
@@ -110,30 +121,22 @@ function App() {
         <div id="break-label">
           <p>Break Length</p>
           <div className='upDownContainer'>
-            <button id="break-decrement" onClick={handleDecrement}>
-            ↓
-            </button>
+            <button id="break-decrement" onClick={handleDecrement} />
               <p id="break-length">{breakLength}</p>
-            <button id="break-increment" onClick={handleIncrement}>
-              ↑
-            </button>
+            <button id="break-increment" onClick={handleIncrement} />
           </div>
         </div>
         <div id="session-label">
           <p>Session Length</p>
           <div className='upDownContainer'>
-            <button id="session-decrement" onClick={handleDecrement}>
-              ↓
-            </button>
+            <button id="session-decrement" onClick={handleDecrement} />
               <p id="session-length">{sessionTime}</p>
-            <button id="session-increment" onClick={handleIncrement}>
-              ↑
-            </button>
+            <button id="session-increment" onClick={handleIncrement} />
           </div>
         </div>
       </div>
 
-      <div className='session'>
+      <div className={breakSession ? 'breakSession' : 'session'}>
         <div id="timer-label">
           <p>{breakSession ? 'Break' : 'Session'}</p>
         </div>
@@ -142,22 +145,20 @@ function App() {
           <p id="time-left">{convertMtoMS(clockTime)}</p>
         </div>
       </div>
-        
-        <button id="start_stop" onClick={handlePlay }>
-          <PlayCircleOutlineIcon />
-        </button>
-        <button id="reset" onClick={handleReset}>
-          <ReplayIcon />
-        </button>
+      <div className='playAndStop'>
+        <button id="start_stop" onClick={handlePlay} />
+        <button id="reset" onClick={handleReset} />
+      </div>
         <div className="alarm">
-          {
-            clockTime === 0 ?  
-              <AlarmOnIcon sx={{ color: "black" }}/>
+          {/* {
+            displayAlarm ?  
+              <AlarmOnIcon fontSize="large" sx={{ color: "black" }}/>
             : 
             null
-          }
+          } */}
         </div>
       </div>
+        <p className='by'><a href="https://github.com/FARichieri" target="_blank" rel="noreferrer">By frichieri</a></p>
       <audio
           id="beep"
           preload="auto"
