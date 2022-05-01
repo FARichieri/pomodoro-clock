@@ -74,6 +74,8 @@ body {
     width: 500px;
     justify-content: center;
     box-shadow: 0 0 10px 2px white;
+    animation-name: appear;
+    animation-duration: 2s;
 }
 
 .pomodoro {
@@ -236,6 +238,8 @@ button:active {
     top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
+    animation-name: appear;
+    animation-duration: 10s;
   }
   
   .by a {
@@ -260,12 +264,15 @@ button:active {
         font-size: 1.8rem;
     }
     #break-label, #session-label {
-        width: 170px;
+        margin-top: 10px;
+        width: 150px;
     }
     #break-label p, #session-label p {
         font-size: .9rem
     }
-
+    .breakAndSession {
+        margin: 15px 0;
+    }
 }
 
 @media only screen and (max-width: 350px) {
@@ -273,5 +280,31 @@ button:active {
         height: 280px;
         width: 280px;
     }
+    #time-left {
+        font-size: 1rem;
+    }
+    #title {
+        font-size: 1rem;
+    }
+    #break-label, #session-label {
+        margin-top: 10px;
+        width: 120px;
+    }
+    #break-label p, #session-label p {
+        font-size: .7rem
+    }
+    .breakAndSession {
+        margin: 15px 0;
+    }
+    .by, .by a  {
+        margin-top: 9px;
+        font-size: .7rem;
+    }
 
 }
+
+@keyframes appear {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
