@@ -39,6 +39,7 @@ body {
 
 .title {
     border: 1px solid yellow;
+    padding: 20px;
 }
 
 .AppContainer {

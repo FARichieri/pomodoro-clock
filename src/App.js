@@ -1,12 +1,12 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [breakLength, setBreakLength] = React.useState(5);
-  const [sessionTime, setSessionTime] = React.useState(25);
-  // const [clockTime, setClockTime] = React.useState(1500);
-  const [play, setPlay] = React.useState(true);
-
+  const [breakLength, setBreakLength] = useState(5);
+  const [sessionTime, setSessionTime] = useState(25);
+  const [clockTime, setClockTime] = useState(1500);
+  const [play, setPlay] = useState(false);
+  const [breakSession, setbreakSession] = useState(false);
 
   const convertMtoMS = (value) => {
     let minutes = Math.floor(value / 60);
@@ -18,14 +18,47 @@ function App() {
     )
   }
 
-  const [displayClock, setDisplayClock] = React.useState(convertMtoMS(1500));
+  const [displayClock, setDisplayClock] = React.useState(convertMtoMS(clockTime));
 
+  useEffect(() => {
+    let interval = null;
+    if (play && !breakSession) {
+      interval = setInterval(() => {
+        if (clockTime >= 0) {
+          setClockTime((time) => time - 1)
+          // setDisplayClock(convertMtoMS(clockTime))
+        } else {
+          setbreakSession(true)
+          setPlay(false);
+          clearInterval(interval)
+          setClockTime(breakLength * 60)
+        }
+      }, 1000)
+    }
+    if (breakSession && !play) {
+      console.log(clockTime)
+      interval = setInterval(() => {
+        if (clockTime >= 0) {
+          setClockTime((time) => time - 1)
+          // setDisplayClock(convertMtoMS(clockTime))
+        } else {
+          setbreakSession(false)
+          setPlay(true);
+          clearInterval(interval)
+          setClockTime(sessionTime * 60)
+        }
+      }, 1000)
+    }
+    return () => clearInterval(interval)
+  }, [play, sessionTime, displayClock, clockTime, breakSession, breakLength])
 
   function handleReset() {
     setBreakLength(5)
     setSessionTime(25)
-    // setClockTime(25)
+    setClockTime(1500)
     setDisplayClock(convertMtoMS(1500))
+    setbreakSession(false)
+    setPlay(false);
   }
 
   function handleIncrement(e) {
@@ -34,7 +67,7 @@ function App() {
     }
     if (e.target.id === 'session-increment' && sessionTime < 60) {
       setSessionTime(sessionTime + 1);
-      // setClockTime(clockTime + 1)
+      setClockTime(clockTime + 60)
       setDisplayClock(convertMtoMS(sessionTime * 60 + 60))
     }
   }
@@ -45,39 +78,14 @@ function App() {
     }
     if (e.target.id === 'session-decrement' && sessionTime > 1) {
       setSessionTime(sessionTime - 1);
-      // setClockTime(clockTime - 1)
+      setClockTime(clockTime - 60)
       setDisplayClock(convertMtoMS(sessionTime * 60 - 60))
     }
   }
 
-
-
-    
-    var seconds = 0;
-    var interval;
-    function pomodoro(mins) {
-      seconds = mins*60 || 0;     
-      var interval = setInterval(function() {
-            if (play === false) console.log("Debería terminar")
-            seconds--;
-            console.log(convertMtoMS(seconds))
-            setDisplayClock(convertMtoMS(seconds))
-            if(!seconds){
-                clearInterval(interval); 
-            }
-      },1000)
-    }
-
-    function handlePlay() {
-      if (play === true) {
-        (pomodoro(sessionTime))
-        setPlay(false)
-      } else {
-        setPlay(true)
-        clearInterval(interval)
-      }
-    }
-
+  function handlePlay() {
+    setPlay(!play)
+  }
 
   return (
     <div className="AppContainer">
@@ -105,7 +113,8 @@ function App() {
 
       <div className='session' id="timer-label">
         <p>Session</p>
-        <p id="time-left">{displayClock}</p>
+        <p>{breakSession ? 'break' : ''}</p>
+        <p id="time-left">{convertMtoMS(clockTime)}</p>
       </div>
         <button id="start_stop" onClick={handlePlay}>≧</button>
         <button id="reset" onClick={handleReset}>↺</button>
